@@ -11,7 +11,7 @@
 using namespace std;
 
 using Point = struct {int x, y;};
-using Rect = struct {int xlow, xhigh, ylow, yhigh;};
+using Rect = struct {int xlow, ylow, xhigh, yhigh;};
 using Data = vector<Point>;
 
 struct Node {
@@ -25,8 +25,8 @@ struct Node {
 
 class HilbertRtree {
     Node* root;
-    static int getHilbertIndex();
 public:
+    static int getHilbertIndex(Point, int x, int y, int xi, int xj, int yi, int yj, int n, int index);
     void insert(Data);
     void remove(Data);
 };
