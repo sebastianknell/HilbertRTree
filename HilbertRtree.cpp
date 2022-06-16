@@ -4,7 +4,9 @@
 
 #include "HilbertRtree.h"
 
-bool isInRect(const Point &p, const Rect &rect) {
+bool isInRect(const Point &p, Rect rect) {
+    if (rect.xlow > rect.xhigh) swap(rect.xlow, rect.xhigh);
+    if (rect.ylow > rect.yhigh) swap(rect.ylow, rect.yhigh);
     return p.x >= rect.xlow && p.x <= rect.xhigh && p.y >= rect.ylow && p.y <= rect.yhigh;
 }
 
@@ -16,7 +18,7 @@ int HilbertRtree::getHilbertIndex(Point p, int x, int y, int xi, int xj, int yi,
         return getHilbertIndex(p, x, y, yi/2, yj/2, xi/2, xj/2, n-1, index);
     }
     // Cuadrante 2
-    else if (isInRect(p, {x+xi/2, y+xj/2, x+xi+yi/2, y+xj/2+yj/2})) {
+    else if (isInRect(p, {x+xi/2, y+xj/2, x+xi+yi/2, y+xj+yj/2})) {
         if (n <= 0) return index + 1;
         return getHilbertIndex(p, x+xi/2, y+xj/2, xi/2, xj/2, yi/2, yj/2, n-1, index + 4);
     }
